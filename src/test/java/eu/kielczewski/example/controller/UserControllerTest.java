@@ -30,11 +30,20 @@ public class UserControllerTest {
 
     @Test
     public void shouldCreateUser() throws Exception {
+        final User savedUser = stubServiceToReturnStoredUser();
         final User user = UserUtil.createUser();
-        userController.createUser(user);
+        User returnedUser = userController.createUser(user);
         // verify user was passed to UserService
         verify(userService, times(1)).save(user);
+        assertEquals("Returned user should come from the service", savedUser, returnedUser);
     }
+
+    private User stubServiceToReturnStoredUser() {
+        final User user = UserUtil.createUser();
+        when(userService.save(any(User.class))).thenReturn(user);
+        return user;
+    }
+
 
     @Test
     public void shouldListAllUsers() throws Exception {
