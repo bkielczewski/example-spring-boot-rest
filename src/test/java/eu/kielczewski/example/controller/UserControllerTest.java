@@ -9,8 +9,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.util.Collection;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
@@ -35,9 +38,16 @@ public class UserControllerTest {
 
     @Test
     public void shouldListAllUsers() throws Exception {
-        userController.listUsers();
+        stubServiceToReturnExistingUsers(10);
+        Collection<User> users = userController.listUsers();
+        assertNotNull(users);
+        assertEquals(10, users.size());
         // verify user was passed to UserService
         verify(userService, times(1)).getList();
+    }
+
+    private void stubServiceToReturnExistingUsers(int howMany) {
+        when(userService.getList()).thenReturn(UserUtil.createUserList(howMany));
     }
 
 }
