@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
+import java.util.List;
 
 @Service
 @Validated
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Collection<User> getList() {
+    public List<User> getList() {
         LOGGER.debug("Retrieving the list of all users");
         return repository.findAll();
     }

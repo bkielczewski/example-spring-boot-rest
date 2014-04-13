@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public Collection<User> listUsers() {
+    public List<User> listUsers() {
         LOGGER.debug("Received request to list all users");
         return userService.getList();
     }
